@@ -1,5 +1,5 @@
-#ifndef PROTOTYPES_H
-#define PROTOTYPES_H
+#ifndef PARSER_H
+#define PARSER_H
 
 // Structs
 struct Node {
