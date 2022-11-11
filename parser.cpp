@@ -3,7 +3,8 @@
 #include <vector>
 #include <fstream>
 #include <ctype.h>
-#include "prototypes.h"
+#include "parser.h"
+#include "tree.h"
 
 using namespace std;
 
