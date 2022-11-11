@@ -1,3 +1,11 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <ctype.h>
+#include "prototypes.h"
+using namespace std;
+
 void parserError(string message, int line) {
     // Get error line
     ifstream file;
