@@ -3,8 +3,12 @@
 #include <vector>
 #include <fstream>
 #include <ctype.h>
-#include "prototypes.h"
+#include "parser.h"
+#include "tree.h"
+
 using namespace std;
+
+
 /*
 // Create and initialize the tree with just the root node
 struct Node* createTree(string token){
