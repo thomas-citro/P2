@@ -1,0 +1,5 @@
+whole testVar := 13;
+program
+begin
+input x ; 
+end
