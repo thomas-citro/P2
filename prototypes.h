@@ -1,3 +1,6 @@
+#ifndef PROTOTYPES_H
+#define PROTOTYPES_H
+
 // Structs
 struct Node {
 	string token;
@@ -24,3 +27,5 @@ struct Node* createTree(string);
 struct Node* insertNode(struct Node*, string);
 void addSubtree(struct Node*, struct Node*);
 void inorderTraversal(struct Node*, int);
+
+#endif
