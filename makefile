@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g -Wall -Wshadow
+CFLAGS = -g -Wall -Wshadow -std=c++0x
 LOCFLAGS = -lm -lpthread
 SRC = $(wildcard *.cpp)
 TAR = $(SRC:.cpp=.o)
