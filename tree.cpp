@@ -1,3 +1,11 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <ctype.h>
+#include "prototypes.h"
+using namespace std;
+
 // Create and initialize the tree with just the root node
 struct Node* createTree(string token){
 	struct Node *temp = new Node();
