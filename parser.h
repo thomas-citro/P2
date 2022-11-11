@@ -21,11 +21,4 @@ void vars(std::vector<std::vector<std::string>>&);
 void block(std::vector<std::vector<std::string>>&);
 void parserError(std::string, int);
 
-
-// Function prototypes for tree
-struct Node* createTree(std::string);
-struct Node* insertNode(struct Node*, std::string);
-void addSubtree(struct Node*, struct Node*);
-void inorderTraversal(struct Node*, int);
-
 #endif
