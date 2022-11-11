@@ -24,8 +24,6 @@ int FSA[9][12] = {
 string keywords[17] = {"begin", "end", "do", "while", "whole", "label",
                        "return", "input", "output", "program", "warp",
                        "if", "then", "pick", "declare", "assign", "func"};
-int tokenID;
-struct Node* tree;
 
 
 int main() {
@@ -53,7 +51,6 @@ int main() {
     outputVector(tokens);
     
     /* Start the parser */
-    tokenID = 0;
     parser(tokens);
 }
 
@@ -62,7 +59,7 @@ void processLine(string line, vector<vector<string>>& tokens, bool& processingCo
     string currentToken = "";
     string tokenType = "";
     int tokenFirstChar = 0;
-    int i;
+    unsigned int i;
     for (i = 0; i < line.length(); i++) {
         if (line[i] == '#' && processingComment) {
             processingComment = false;
@@ -81,7 +78,7 @@ void processLine(string line, vector<vector<string>>& tokens, bool& processingCo
 }
 
 
-void processCharacter(string& currentToken, string& tokenType, int& tokenFirstChar, vector<vector<string>>& tokens, bool& processingComment, int& state, int lineNumber, char currentChar, int& i) {
+void processCharacter(string& currentToken, string& tokenType, int& tokenFirstChar, vector<vector<string>>& tokens, bool& processingComment, int& state, int lineNumber, char currentChar, unsigned int& i) {
     int FSA_Value = FSA[state][getColumn(currentChar)];
     if (FSA_Value > 1000) {
         if (FSA_Value == 1001) {
@@ -158,7 +155,7 @@ int getColumn(char c) {
 
 void outputVector(vector<vector<string>>& myVector) {
     cout << "--- Vector ---" << endl;
-    for (int i = 0; i < myVector.size(); i++) {\
+    for (unsigned int i = 0; i < myVector.size(); i++) {\
         cout << "[" << i << "] = ['" << myVector[i][0] << "', '" << myVector[i][1] << "', '" << myVector[i][2] 
         << "', '" << myVector[i][3] << "']" << endl;
     }

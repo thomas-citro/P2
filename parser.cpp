@@ -4,7 +4,15 @@
 #include <fstream>
 #include <ctype.h>
 #include "prototypes.h"
+
 using namespace std;
+
+
+/* Global variables */
+int tokenID;
+struct Node* tree;
+
+
 
 void parserError(string message, int line) {
     // Get error line
@@ -35,12 +43,13 @@ void parserError(string message, int line) {
 
 
 void parser(vector<vector<string>>& tokens) {
+    tokenID = 0;
     tree = createTree("<program>");
     if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
         tokenID++;
-        addSubtree(tree, block(tokens));
+        //addSubtree(tree, block(tokens));
     } else {
-        addSubtree(vars(tokens));
+        //addSubtree(vars(tokens));
     }
 }
 

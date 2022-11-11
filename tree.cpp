@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include "prototypes.h"
 using namespace std;
-
+/*
 // Create and initialize the tree with just the root node
 struct Node* createTree(string token){
 	struct Node *temp = new Node();
@@ -27,7 +27,7 @@ void addSubtree(struct Node* node, struct Node* subtree){
 }
 
 struct Node* insertNode(struct Node* node, struct Token* token) { 
-	/* If the node is empty, return a new node, end case */
+	// If the node is empty, return a new node, end case
     if (node == NULL){
         return createTree(token);
     }
@@ -50,15 +50,15 @@ struct Node* insertNode(struct Node* node, struct Token* token) {
 		node->fourth = createTree(temp);
 	}
 	else{
-		/*something weird happend if we got here*/
+		//something weird happend if we got here
 		perror("ERROR: Tree.cpp: For some reason all of the child nodes are full");
 		exit(1);
 	}
 	return node; 
 } 
-/*Inorder traversal*/
+//Inorder traversal
 void inorderTraversal(struct Node *node, int depth){
-	/*arg depth is to keep track of depth recusively*/
+	//arg depth is to keep track of depth recusively
 	if(node == NULL){
 		return;
 	}
@@ -66,12 +66,12 @@ void inorderTraversal(struct Node *node, int depth){
 		cout << node->token->instance << endl;
 	}
 	string depthStr = "";
-	/*get the depth string of spaces*/
+	//get the depth string of spaces
 	for(int i = 0; i < depth+1; i++){
 		depthStr += "__|";
 	}
 	
-	/*print children*/
+	//print children
 	if(node->first != NULL){
 		cout << depthStr << node->first->token->instance << endl;
 		if(node->second != NULL){
@@ -90,3 +90,5 @@ void inorderTraversal(struct Node *node, int depth){
 	inorderTraversal(node->third,depth+1);
 	inorderTraversal(node->fourth,depth+1);
 }
+
+*/

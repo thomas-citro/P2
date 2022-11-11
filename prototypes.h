@@ -3,28 +3,28 @@
 
 // Structs
 struct Node {
-	string token;
+	std::string token;
 	struct Node *first, *second, *third, *fourth;		
 };
 
 
 // Function prototypes for main/scanner
-void outputVector(vector<vector<string>>&);
-void processLine(string, vector<vector<string>>&, bool&, int&, int);
-void processCharacter(string&, string&, int&, vector<vector<string>>&, bool&, int&, int, char, int&);
+void outputVector(std::vector<std::vector<std::string>>&);
+void processLine(std::string, std::vector<std::vector<std::string>>&, bool&, int&, int);
+void processCharacter(std::string&, std::string&, int&, std::vector<std::vector<std::string>>&, bool&, int&, int, char, unsigned int&);
 int getColumn(char);
 
 
 // Function prototypes for parser
-void parser(vector<vector<string>>&);
-void vars(vector<vector<string>>&);
-void block(vector<vector<string>>&);
-void parserError(string, int);
+void parser(std::vector<std::vector<std::string>>&);
+void vars(std::vector<std::vector<std::string>>&);
+void block(std::vector<std::vector<std::string>>&);
+void parserError(std::string, int);
 
 
 // Function prototypes for tree
-struct Node* createTree(string);
-struct Node* insertNode(struct Node*, string);
+struct Node* createTree(std::string);
+struct Node* insertNode(struct Node*, std::string);
 void addSubtree(struct Node*, struct Node*);
 void inorderTraversal(struct Node*, int);
 
