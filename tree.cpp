@@ -8,8 +8,6 @@
 
 using namespace std;
 
-
-
 // Create and initialize the tree with just the root node
 node* createTree(string token){
 	node *temp = new Node();
@@ -17,30 +15,32 @@ node* createTree(string token){
 	temp->first = temp->second = temp->third = temp->fourth = NULL;
 	return temp;
 }
-/*
+
+// Add the subtree to the given node
 void addSubtree(node* myNode, node* subtree){
 	if (myNode->first == NULL) {
-        	myNode->first = subtree;
+		myNode->first = subtree;
 	} else if (myNode->second == NULL) {
 		myNode->second = subtree;
-    	} else if (myNode->third == NULL) {
-        	myNode->third = subtree;
+	} else if (myNode->third == NULL) {
+		myNode->third = subtree;
 	} else if (myNode->fourth == NULL) {
 		myNode->fourth = subtree;
-    	}
+	}
 }
 
-struct Node* insertNode(node* myNode, struct Token* token) { 
+// Add a node to the current level
+node* insertNode(node* myNode, struct Token* token) { 
 	// If the node is empty, return a new node, end case
-    	if (myNode == NULL){
-        	return createTree(token);
-    	}
-	//copy the token
+	if (myNode == NULL){
+		return createTree(token);
+	}
+	// Copy the token
 	struct Token* temp = new Token();
 	temp->instance = token->instance;
 	temp->line = token->line;
 	temp->tkId = token->tkId;
-	//if the first is not empty move to second:
+	
 	if (myNode->first == NULL){
 		myNode->first = createTree(temp);
 	} else if (myNode->second == NULL) {
@@ -49,15 +49,11 @@ struct Node* insertNode(node* myNode, struct Token* token) {
 		myNode->third = createTree(temp);
 	} else if (myNode->fourth == NULL) {
 		myNode->fourth = createTree(temp);
-	} else {
-		//something weird happend if we got here
-		perror("ERROR: Tree.cpp: For some reason all of the child nodes are full");
-		exit(1);
 	}
 	return myNode; 
 } 
-
-//Inorder traversal
+/*
+// Inorder traversal
 void inorderTraversal(node* myNode, int depth){
 	//arg depth is to keep track of depth recusively
 	if (myNode == NULL) {
@@ -82,9 +78,9 @@ void inorderTraversal(node* myNode, int depth){
 			}
 		}
 	}
-        if (myNode->fourth != NULL) {
-                cout << depthStr << myNode->fourth->token->instance << endl;
-        }
+		if (myNode->fourth != NULL) {
+				cout << depthStr << myNode->fourth->token->instance << endl;
+		}
 
 	inorderTraversal(myNode->first,depth+1);
 	inorderTraversal(myNode->second,depth+1);
