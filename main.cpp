@@ -37,9 +37,9 @@ int main() {
     int lineLength = 0;
     
     /* Process file line by line (Scanner) */
-    newfile.open("testFile.txt",ios::in);
+    newfile.open("input.txt",ios::in);
     if (newfile.is_open()) {
-        string currentLine;
+	string currentLine;
         while(getline(newfile, currentLine)) {
             lineLength = currentLine.length();
             processLine(currentLine, tokens, processingComment, state, lineNumber);

@@ -11,14 +11,14 @@ using namespace std;
 
 /* Global variables */
 int tokenID;
-struct Node* tree;
+node* tree;
 
 
 
 void parserError(string message, int line) {
     // Get error line
     ifstream file;
-    file.open("testFile.txt");
+    file.open("input.txt");
     if (file.fail()) {
         cout << "File failed to open." << endl;
         exit(0);
@@ -45,7 +45,7 @@ void parserError(string message, int line) {
 
 void parser(vector<vector<string>>& tokens) {
     tokenID = 0;
-    tree = createTree("<program>");
+    //tree = createTree("<program>");
     if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
         tokenID++;
         //addSubtree(tree, block(tokens));
@@ -92,5 +92,6 @@ void vars(vector<vector<string>>& tokens) {
 
 
 void block(vector<vector<string>>& tokens) {
+    
     
 }

@@ -2,10 +2,10 @@
 #define PARSER_H
 
 // Structs
-struct Node {
+typedef struct Node {
 	std::string token;
 	struct Node *first, *second, *third, *fourth;		
-};
+}node;
 
 
 // Function prototypes for main/scanner
