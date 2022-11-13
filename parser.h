@@ -6,6 +6,12 @@ typedef struct Node {
 	std::string token;
 	struct Node *first, *second, *third, *fourth;		
 }node;
+typedef struct Token {
+	std::string token;
+	std::string tokenType;
+	std::int lineNum;
+	std::int characterNum;
+}token;
 
 
 // Function prototypes for main/scanner
