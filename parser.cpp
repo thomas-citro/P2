@@ -11,8 +11,18 @@ using namespace std;
 
 /* Global variables */
 int tokenID;
-node* tree;
+vector<vector<string>> tokens;
+bool lookedAhead = false;
 
+
+// Iterate over scanner depending on if we already looked ahead
+void nextToken() {
+	if (lookedAhead == false) {
+		tokenID++;
+	} else {
+		lookedAhead = false;
+	}
+}
 
 // Create a nonterminal token
 token* nonterminal(string myStr) {
@@ -61,14 +71,14 @@ void parserError(string message, int line) {
 }
 
 // BNF: <program> -> <vars> program <block>
-void parser(vector<vector<string>>& tokens) {
+void parser(vector<vector<string>>& passedTokens) {
 	tokenID = 0;
-	tree = createTree(nonterminal("<program>"));
-	if (tokens[tokenID][0] == "program") {
-		tokenID++;
-	} else {
+	tokens = passedTokens;
+	node* tree = createTree(nonterminal("<program>"));
+	if (!(tokens[tokenID][0] == "program")) {
 		addSubtree(tree, vars(tokens));
 	}
+	nextToken();
 	addSubtree(tree, block(tokens));
 	preorderTraversal(tree, 0);
 }
@@ -77,42 +87,42 @@ void parser(vector<vector<string>>& tokens) {
 node* vars(vector<vector<string>>& tokens) {
 	node* tree = createTree(nonterminal("<vars>"));
 	if (!(tokens[tokenID][0] == "whole")) {
-		parserError("Expected 'program' or 'whole' keyword. Received '" + tokens[tokenID][1] + "'.", stoi(tokens[tokenID][2]));
+		parserError("Expected 'whole' keyword. Received '" + tokens[tokenID][1] + "'.", stoi(tokens[tokenID][2]));
 	}
-	tokenID++;
+	nextToken();
 		
 	if (!(tokens[tokenID][0] == "identifier")) {
 		parserError("Expected identifier after 'whole' keyword.", stoi(tokens[tokenID][2]));
 	}
 	tree = insertNode(tree, terminal(tokens[tokenID]));
-	tokenID++;
+	nextToken();
 	
 	if (!(tokens[tokenID][0] == "operator" && tokens[tokenID][1] == ":=")) {
 		parserError("Expected ':=' for variable initialization.", stoi(tokens[tokenID][2]));
 	}
-	tokenID++;
+	nextToken();
 	
 	if (!(tokens[tokenID][0] == "integer")) {
 		parserError("Expected integer value for variable initialization.", stoi(tokens[tokenID][2]));
 	}
 	tree = insertNode(tree, terminal(tokens[tokenID]));
-	tokenID++;
+	nextToken();
 	
 	if (!(tokens[tokenID][0] == "operator" && tokens[tokenID][1] == ";")) {
 		parserError("Expected semicolon after variable initialization.", stoi(tokens[tokenID][2]));
 	}
-	tokenID++;
 	
-	if (!(tokens[tokenID][0] == "program")) {
-		tokenID++;
+	nextToken();
+	if (tokens[tokenID][0] == "whole") {
 		addSubtree(tree, vars(tokens));
-	}
+	} else lookedAhead = true;
 	return tree;
 }
 
 // BNF: <block> -> begin <vars> <stats> end
 node* block(vector<vector<string>>& tokens) {
 	node* tree = createTree(nonterminal("<block>"));
+	if (!(tokens[tokenID][0] == "begin")) parserError("Expected 'begin' keyword. Received '" + tokens[tokenID][1] + "'.");
 	return tree;
 }
 

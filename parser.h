@@ -23,6 +23,7 @@ int getColumn(char);
 
 // Function prototypes for parser
 void parserError(std::string, int);
+void nextToken();
 token* nonterminal(std::string);
 token* terminal(std::vector<std::string>);
 void parser(std::vector<std::vector<std::string>>&);
