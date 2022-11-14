@@ -69,7 +69,7 @@ void parser(vector<vector<string>>& tokens) {
 		addSubtree(tree, vars(tokens));
 	}
 	addSubtree(tree, block(tokens));
-	inorderTraversal(); // TODO: Inorder traversal here (to output tree)
+	preorderTraversal(tree, 0);
 }
 
 // BNF: <vars> -> empty | whole Identifier := Integer ; <vars>
