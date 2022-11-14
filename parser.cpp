@@ -43,25 +43,13 @@ token* terminal(vector<string> myVector) {
 }
 
 // Create relational operator terminal token
-token* ROTerminal(token* myToken, vector<string> myVector) {
-	
+token* bracketedEqualTerminal(vector<string> myVector) {
+	token* tk = new Token();
+	tk->tokenType = "operator";
+	tk->instance = "[=]";
+	tk->lineNum = stoi(myVector[2]);
+	tk->characterNum = stoi(myVector[3]);
 	return tk;
-}
-
-// Handle error with relational operator syntax
-void ROError(string orgOps) {
-	if (tokens[tokenID][0] != "operator") {
-		tokenID--;
-		parserError("'" + orgOps + "' is not a valid relational operator.");
-	} else {
-		string wholeOperator = orgOps;
-		while (tokens[tokenID][0] == "operator") {
-			wholeOperator += tokens[tokenID][1];
-			nextToken();
-		}
-		tokenID--;
-		parserError("'" + wholeOperator + "' is not a valid relational operator.");
-	}
 }
 
 // Print a parser error and exit
@@ -344,10 +332,10 @@ node* RO() {
 		tree = insertNode(tree, terminal(tokens[tokenID]));
 	} else if (instance == "[") {
 		nextToken();
-		if (tokens[tokenID][1] != "=") ROError("[");
+		if (tokens[tokenID][1] != "=") parserError("Expected relational operator. Received '['.");
 		nextToken();
-		if (tokens[tokenID][1] != "]") ROError("[=");
-		tree = insertNode(tree, ROTerminal(orgToken, "[=]"));
+		if (tokens[tokenID][1] != "]") parserError("Expected relational operator. Received '[='.);
+		tree = insertNode(tree, bracketedEqualTerminal(orgToken));
 	} else parserError("Expected relational operator. Received '" + instance + "'.");
 	nextToken();
 	return tree;
