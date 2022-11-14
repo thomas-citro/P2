@@ -47,7 +47,7 @@ int main() {
 		}
 		newfile.close();
 	}
-	vector<string> innerVector{"eofTK", "", to_string(lineNumber - 1), to_string(lineLength)};
+	vector<string> innerVector{"eof", "", to_string(lineNumber - 1), to_string(lineLength)};
 	tokens.push_back(innerVector);
 	outputVector(tokens);
 	
