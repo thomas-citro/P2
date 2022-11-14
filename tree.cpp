@@ -9,9 +9,9 @@
 using namespace std;
 
 // Create and initialize the tree with just the root node
-node* createTree(string token){
+node* createTree(token* myTk){
 	node *temp = new Node();
-	temp->token = token;
+	temp->token = myTk;
 	temp->first = temp->second = temp->third = temp->fourth = NULL;
 	return temp;
 }
@@ -52,39 +52,32 @@ node* insertNode(node* myNode, struct Token* token) {
 	}
 	return myNode; 
 } 
-/*
-// Inorder traversal
-void inorderTraversal(node* myNode, int depth){
-	//arg depth is to keep track of depth recusively
-	if (myNode == NULL) {
-		return;
-	}
-	if (depth == 0) {
-		cout << node->token->instance << endl;
-	}
+
+// Preorder traversal (root first, then each branch from left to right)
+void preorderTraversal(node* myNode, int depth) {
+	if (myNode == NULL) return;
+	if (depth == 0) cout << node->token->token << endl;
 	string depthStr = "";
-	//get the depth string of spaces
-	for (int i = 0; i < depth+1; i++) {
+	// Get the depth string of spaces
+	for (int i = 0; i < depth + 1; i++) {
 		depthStr += "__|";
 	}
 	
-	//print children
+	// Print children
 	if (myNode->first != NULL) {
-		cout << depthStr << myNode->first->token->instance << endl;
+		cout << depthStr << myNode->first->token->token << endl;
+		preorderTraversal(node->first, depth + 1);
 		if (myNode->second != NULL) {
-			cout << depthStr << myNode->second->token->instance << endl;
+			cout << depthStr << myNode->second->token->token << endl;
+			preorderTraversal(node->second, depth + 1);
 			if (myNode->third != NULL) {
-				cout << depthStr << myNode->third->token->instance << endl;
+				cout << depthStr << myNode->third->token->token << endl;
+				preorderTraversal(node->third, depth + 1);
 			}
 		}
 	}
-		if (myNode->fourth != NULL) {
-				cout << depthStr << myNode->fourth->token->instance << endl;
-		}
-
-	inorderTraversal(myNode->first,depth+1);
-	inorderTraversal(myNode->second,depth+1);
-	inorderTraversal(myNode->third,depth+1);
-	inorderTraversal(myNode->fourth,depth+1);
+	if (myNode->fourth != NULL) {
+		cout << depthStr << myNode->fourth->token->instance << endl;
+		preorderTraversal(node->fourth, depth + 1);
+	}
 }
-*/
