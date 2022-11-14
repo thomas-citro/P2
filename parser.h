@@ -27,7 +27,7 @@ void nextToken();
 token* nonterminal(std::string);
 token* terminal(std::vector<std::string>);
 token* ROTerminal(token*, vector<string>);
-void ROError(token*, string);
+void ROError(string);
 void parser(std::vector<std::vector<std::string>>&);
 node* vars();
 node* block();
