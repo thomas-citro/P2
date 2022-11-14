@@ -83,7 +83,7 @@ void processCharacter(string& currentToken, string& tokenType, int& tokenFirstCh
 	int FSA_Value = FSA[state][getColumn(currentChar)];
 	if (FSA_Value > 1000) {
 		if (FSA_Value == 1001) {
-			tokenType = "identifierToken";
+			tokenType = "identifier";
 			bool keyword = false;
 			int arraySize = sizeof(keywords) / sizeof(string);
 			for (int j = 0; j < arraySize; j++) {
@@ -92,12 +92,12 @@ void processCharacter(string& currentToken, string& tokenType, int& tokenFirstCh
 				}
 			}
 			if (keyword) {
-				tokenType = "keywordToken";
+				tokenType = currentToken;
 			}
 		} else if (FSA_Value == 1002) {
-			tokenType = "integerToken";
+			tokenType = "integer";
 		} else if (FSA_Value == 1003) {
-			tokenType = "operatorToken";
+			tokenType = "operator";
 		}
 		vector<string> innerVector{tokenType, currentToken, to_string(lineNumber), to_string(tokenFirstChar)};
 		tokens.push_back(innerVector);
