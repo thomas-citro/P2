@@ -10,7 +10,7 @@ typedef struct Token {
 }token;
 typedef struct Node {
 	struct Token *tk;
-	struct Node *first, *second, *third, *fourth;		
+	struct Node *first, *second, *third, *fourth, *fifth;
 }node;
 
 
@@ -26,6 +26,8 @@ void parserError(std::string, int);
 void nextToken();
 token* nonterminal(std::string);
 token* terminal(std::vector<std::string>);
+token* ROTerminal(token*, vector<string>);
+void ROError(token*, string);
 void parser(std::vector<std::vector<std::string>>&);
 node* vars();
 node* block();

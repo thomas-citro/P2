@@ -26,6 +26,8 @@ void addSubtree(node* myNode, node* subtree){
 		myNode->third = subtree;
 	} else if (myNode->fourth == NULL) {
 		myNode->fourth = subtree;
+	} else if (myNode->fifth == NULL) {
+		myNode->fifth = subtree;
 	}
 }
 
@@ -50,6 +52,8 @@ node* insertNode(node* myNode, token* myTk) {
 		myNode->third = createTree(temp);
 	} else if (myNode->fourth == NULL) {
 		myNode->fourth = createTree(temp);
+	} else if (myNode->fifth == NULL) {
+		myNode->fifth = createTree(temp);
 	}
 	return myNode; 
 } 
@@ -68,17 +72,21 @@ void preorderTraversal(node* myNode, int depth) {
 	if (myNode->first != NULL) {
 		cout << depthStr << myNode->first->tk->instance << endl;
 		preorderTraversal(myNode->first, depth + 1);
-		if (myNode->second != NULL) {
-			cout << depthStr << myNode->second->tk->instance << endl;
-			preorderTraversal(myNode->second, depth + 1);
-			if (myNode->third != NULL) {
-				cout << depthStr << myNode->third->tk->instance << endl;
-				preorderTraversal(myNode->third, depth + 1);
-			}
-		}
+	}
+	if (myNode->second != NULL) {
+		cout << depthStr << myNode->second->tk->instance << endl;
+		preorderTraversal(myNode->second, depth + 1);
+	}
+	if (myNode->third != NULL) {
+		cout << depthStr << myNode->third->tk->instance << endl;
+		preorderTraversal(myNode->third, depth + 1);
 	}
 	if (myNode->fourth != NULL) {
 		cout << depthStr << myNode->fourth->tk->instance << endl;
 		preorderTraversal(myNode->fourth, depth + 1);
+	}
+	if (myNode->fifth != NULL) {
+		cout << depthStr << myNode->fifth->tk->instance << endl;
+		preorderTraversal(myNode->fifth, depth + 1);
 	}
 }
