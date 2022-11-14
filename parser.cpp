@@ -14,7 +14,24 @@ int tokenID;
 node* tree;
 
 
+// Create a nonterminal token
+token* nonterminal(string myStr) {
+	token* tk = new Token();
+	tk->token = myStr;
+	tk->tokenType = "nonterminalToken";
+	return tk;
+}
 
+// Create a terminal token
+token* terminal(vector<string> myVector) {
+	token* tk = new Token();
+	tk->tokenType = myVector[0];
+	tk->token = myVector[1];
+	tk->lineNum = myVector[2];
+	tk->characterNum = myVector[3];
+}
+
+// Print a parser error and exit
 void parserError(string message, int line) {
 	// Get error line
 	ifstream file;
@@ -42,20 +59,21 @@ void parserError(string message, int line) {
 	exit(0);
 }
 
-
+// BNF: <program> -> <vars> program <block>
 void parser(vector<vector<string>>& tokens) {
 	tokenID = 0;
-	//tree = createTree("<program>");
+	tree = createTree(nonterminal("<program>"));
 	if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
 		tokenID++;
-		//addSubtree(tree, block(tokens));
+		addSubtree(tree, block(tokens));
 	} else {
-		//addSubtree(vars(tokens));
+		addSubtree(vars(tokens));
 	}
 }
 
-
+// BNF: <vars> -> empty | whole Identifier := Integer ; <vars>
 void vars(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<vars>"));
 	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "whole")) {
 		parserError("Expected 'program' or 'whole' keyword. Received '" + tokens[tokenID][1] + "'.", stoi(tokens[tokenID][2]));
 	}
@@ -64,6 +82,7 @@ void vars(vector<vector<string>>& tokens) {
 	if (!(tokens[tokenID][0] == "identifierToken")) {
 		parserError("Expected identifier after 'whole' keyword.", stoi(tokens[tokenID][2]));
 	}
+	tree = insertNode(tree, terminal(tokens[tokenID]));
 	tokenID++;
 	
 	if (!(tokens[tokenID][0] == "operatorToken" && tokens[tokenID][1] == ":=")) {
@@ -74,6 +93,7 @@ void vars(vector<vector<string>>& tokens) {
 	if (!(tokens[tokenID][0] == "integerToken")) {
 		parserError("Expected integer value for variable initialization.", stoi(tokens[tokenID][2]));
 	}
+	tree = insertNode(tree, terminal(tokens[tokenID]));
 	tokenID++;
 	
 	if (!(tokens[tokenID][0] == "operatorToken" && tokens[tokenID][1] == ";")) {
@@ -81,13 +101,11 @@ void vars(vector<vector<string>>& tokens) {
 	}
 	tokenID++;
 	
-	if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
+	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program")) {
 		tokenID++;
-		block(tokens);
-	} else {
-		tokenID++;
-		vars(tokens);
+		addSubtree(tree, vars());
 	}
+	return tree;
 }
 
 
