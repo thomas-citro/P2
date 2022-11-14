@@ -5,6 +5,6 @@
 struct Node* createTree(std::string);
 struct Node* insertNode(struct Node*, std::string);
 void addSubtree(struct Node*, struct Node*);
-void inorderTraversal(struct Node*, int);
+void preorderTraversal(struct Node*, int);
 
 #endif
