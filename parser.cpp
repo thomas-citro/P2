@@ -103,21 +103,16 @@ node* vars() {
 		tree = insertNode(tree, nonterminal("Empty"));
 		return tree;
 	}
-
 	nextToken();	
 	if (tokens[tokenID][0] != "identifier") parserError("Expected identifier after 'whole' keyword.");
 	tree = insertNode(tree, terminal(tokens[tokenID]));
-	
 	nextToken();
 	if (tokens[tokenID][1] != ":=") parserError("Expected ':=' for variable initialization.");
-	
 	nextToken();
 	if (tokens[tokenID][0] != "integer") parserError("Expected integer value for variable initialization.");
 	tree = insertNode(tree, terminal(tokens[tokenID]));
-	
 	nextToken();
-	if (tokens[tokenID][1] != ";") parserError("Expected semicolon after variable initialization.");
-	
+	if (tokens[tokenID][1] != ";") parserError("Expected semicolon after variable initialization.");	
 	nextToken();
 	addSubtree(tree, vars());
 	return tree;
@@ -127,14 +122,11 @@ node* vars() {
 node* block() {
 	node* tree = createTree(nonterminal("<block>"));
 	if (!(tokens[tokenID][0] == "begin")) parserError("Expected 'begin' keyword. Received '" + tokens[tokenID][1] + "'.");
-	
 	nextToken();
 	addSubtree(tree, vars());
 	addSubtree(tree, stats());
-	
 	if (!(tokens[tokenID][0] == "end")) parserError("Expected 'end' keyword. Received '" + tokens[tokenID][1] + "'.");
-	nextToken();
-	
+	nextToken();	
 	return tree;
 }
 
@@ -221,8 +213,14 @@ node* stats() {
 node* mStat() {
 	node* tree = createTree(nonterminal("<mStat>"));	
 	string options[] = {"input", "output", "begin", "if", "while", "assign", "warp", "label"};
-	string *index = find(begin(options), end(options), tokens[tokenID][0]);
-	if (index == end(options)) {
+	int size = sizeof(options)/sizeof(options[0]);
+	bool found = false;
+	for (int i = 0; i < size; i++) {
+		if (options[i] == tokens[tokenID][0]) {
+			found = true;
+		}
+	}
+	if (found == false) {
 		tree = insertNode(tree, nonterminal("Empty"));
 		return tree;
 	}
@@ -334,7 +332,7 @@ node* RO() {
 		nextToken();
 		if (tokens[tokenID][1] != "=") parserError("Expected relational operator. Received '['.");
 		nextToken();
-		if (tokens[tokenID][1] != "]") parserError("Expected relational operator. Received '[='.);
+		if (tokens[tokenID][1] != "]") parserError("Expected relational operator. Received '[='.");
 		tree = insertNode(tree, bracketedEqualTerminal(orgToken));
 	} else parserError("Expected relational operator. Received '" + instance + "'.");
 	nextToken();
