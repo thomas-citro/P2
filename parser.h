@@ -2,16 +2,16 @@
 #define PARSER_H
 
 // Structs
+typedef struct Token {
+	std::string instance;
+	std::string tokenType;
+	int lineNum;
+	int characterNum;
+}token;
 typedef struct Node {
-	std::string token;
+	struct Token *tk;
 	struct Node *first, *second, *third, *fourth;		
 }node;
-typedef struct Token {
-	std::string token;
-	std::string tokenType;
-	std::int lineNum;
-	std::int characterNum;
-}token;
 
 
 // Function prototypes for main/scanner
@@ -23,8 +23,10 @@ int getColumn(char);
 
 // Function prototypes for parser
 void parser(std::vector<std::vector<std::string>>&);
-void vars(std::vector<std::vector<std::string>>&);
-void block(std::vector<std::vector<std::string>>&);
+node* vars(std::vector<std::vector<std::string>>&);
+node* block(std::vector<std::vector<std::string>>&);
 void parserError(std::string, int);
+token* nonterminal(std::string);
+token* terminal(std::vector<std::string>);
 
 #endif

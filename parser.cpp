@@ -17,7 +17,7 @@ node* tree;
 // Create a nonterminal token
 token* nonterminal(string myStr) {
 	token* tk = new Token();
-	tk->token = myStr;
+	tk->instance = myStr;
 	tk->tokenType = "nonterminalToken";
 	return tk;
 }
@@ -26,9 +26,10 @@ token* nonterminal(string myStr) {
 token* terminal(vector<string> myVector) {
 	token* tk = new Token();
 	tk->tokenType = myVector[0];
-	tk->token = myVector[1];
-	tk->lineNum = myVector[2];
-	tk->characterNum = myVector[3];
+	tk->instance = myVector[1];
+	tk->lineNum = stoi(myVector[2]);
+	tk->characterNum = stoi(myVector[3]);
+	return tk;
 }
 
 // Print a parser error and exit
@@ -62,7 +63,8 @@ void parserError(string message, int line) {
 // BNF: <program> -> <vars> program <block>
 void parser(vector<vector<string>>& tokens) {
 	tokenID = 0;
-	tree = createTree(nonterminal("<program>"));
+	string nonterminalStr = "<program>";
+	tree = createTree(nonterminal(nonterminalStr));
 	if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
 		tokenID++;
 	} else {
@@ -73,8 +75,9 @@ void parser(vector<vector<string>>& tokens) {
 }
 
 // BNF: <vars> -> empty | whole Identifier := Integer ; <vars>
-void vars(vector<vector<string>>& tokens) {
-	node* tree = createTree(nonterminal("<vars>"));
+node* vars(vector<vector<string>>& tokens) {
+	string nonterminalStr = "<vars>";
+	node* tree = createTree(nonterminal(nonterminalStr));
 	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "whole")) {
 		parserError("Expected 'program' or 'whole' keyword. Received '" + tokens[tokenID][1] + "'.", stoi(tokens[tokenID][2]));
 	}
@@ -104,12 +107,14 @@ void vars(vector<vector<string>>& tokens) {
 	
 	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program")) {
 		tokenID++;
-		addSubtree(tree, vars());
+		addSubtree(tree, vars(tokens));
 	}
 	return tree;
 }
 
 
-void block(vector<vector<string>>& tokens) {
-	
+node* block(vector<vector<string>>& tokens) {
+	string nonterminalStr = "<block>";
+	node* tree = createTree(nonterminal(nonterminalStr));
+	return tree;
 }
