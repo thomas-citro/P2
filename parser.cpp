@@ -18,7 +18,7 @@ node* tree;
 token* nonterminal(string myStr) {
 	token* tk = new Token();
 	tk->instance = myStr;
-	tk->tokenType = "nonterminalToken";
+	tk->tokenType = "nonterminal";
 	return tk;
 }
 
@@ -64,7 +64,7 @@ void parserError(string message, int line) {
 void parser(vector<vector<string>>& tokens) {
 	tokenID = 0;
 	tree = createTree(nonterminal("<program>"));
-	if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
+	if (tokens[tokenID][0] == "program") {
 		tokenID++;
 	} else {
 		addSubtree(tree, vars(tokens));
@@ -76,34 +76,34 @@ void parser(vector<vector<string>>& tokens) {
 // BNF: <vars> -> empty | whole Identifier := Integer ; <vars>
 node* vars(vector<vector<string>>& tokens) {
 	node* tree = createTree(nonterminal("<vars>"));
-	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "whole")) {
+	if (!(tokens[tokenID][0] == "whole")) {
 		parserError("Expected 'program' or 'whole' keyword. Received '" + tokens[tokenID][1] + "'.", stoi(tokens[tokenID][2]));
 	}
 	tokenID++;
 		
-	if (!(tokens[tokenID][0] == "identifierToken")) {
+	if (!(tokens[tokenID][0] == "identifier")) {
 		parserError("Expected identifier after 'whole' keyword.", stoi(tokens[tokenID][2]));
 	}
 	tree = insertNode(tree, terminal(tokens[tokenID]));
 	tokenID++;
 	
-	if (!(tokens[tokenID][0] == "operatorToken" && tokens[tokenID][1] == ":=")) {
+	if (!(tokens[tokenID][0] == "operator" && tokens[tokenID][1] == ":=")) {
 		parserError("Expected ':=' for variable initialization.", stoi(tokens[tokenID][2]));
 	}
 	tokenID++;
 	
-	if (!(tokens[tokenID][0] == "integerToken")) {
+	if (!(tokens[tokenID][0] == "integer")) {
 		parserError("Expected integer value for variable initialization.", stoi(tokens[tokenID][2]));
 	}
 	tree = insertNode(tree, terminal(tokens[tokenID]));
 	tokenID++;
 	
-	if (!(tokens[tokenID][0] == "operatorToken" && tokens[tokenID][1] == ";")) {
+	if (!(tokens[tokenID][0] == "operator" && tokens[tokenID][1] == ";")) {
 		parserError("Expected semicolon after variable initialization.", stoi(tokens[tokenID][2]));
 	}
 	tokenID++;
 	
-	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program")) {
+	if (!(tokens[tokenID][0] == "program")) {
 		tokenID++;
 		addSubtree(tree, vars(tokens));
 	}
