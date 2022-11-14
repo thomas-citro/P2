@@ -65,10 +65,11 @@ void parser(vector<vector<string>>& tokens) {
 	tree = createTree(nonterminal("<program>"));
 	if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
 		tokenID++;
-		addSubtree(tree, block(tokens));
 	} else {
-		addSubtree(vars(tokens));
+		addSubtree(tree, vars(tokens));
 	}
+	addSubtree(tree, block(tokens));
+	inorderTraversal(); // TODO: Inorder traversal here (to output tree)
 }
 
 // BNF: <vars> -> empty | whole Identifier := Integer ; <vars>
@@ -110,6 +111,5 @@ void vars(vector<vector<string>>& tokens) {
 
 
 void block(vector<vector<string>>& tokens) {
-	
 	
 }
