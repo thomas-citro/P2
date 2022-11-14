@@ -63,8 +63,7 @@ void parserError(string message, int line) {
 // BNF: <program> -> <vars> program <block>
 void parser(vector<vector<string>>& tokens) {
 	tokenID = 0;
-	string nonterminalStr = "<program>";
-	tree = createTree(nonterminal(nonterminalStr));
+	tree = createTree(nonterminal("<program>"));
 	if (tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "program") {
 		tokenID++;
 	} else {
@@ -76,8 +75,7 @@ void parser(vector<vector<string>>& tokens) {
 
 // BNF: <vars> -> empty | whole Identifier := Integer ; <vars>
 node* vars(vector<vector<string>>& tokens) {
-	string nonterminalStr = "<vars>";
-	node* tree = createTree(nonterminal(nonterminalStr));
+	node* tree = createTree(nonterminal("<vars>"));
 	if (!(tokens[tokenID][0] == "keywordToken" && tokens[tokenID][1] == "whole")) {
 		parserError("Expected 'program' or 'whole' keyword. Received '" + tokens[tokenID][1] + "'.", stoi(tokens[tokenID][2]));
 	}
@@ -112,9 +110,110 @@ node* vars(vector<vector<string>>& tokens) {
 	return tree;
 }
 
-
+// BNF: <block> -> begin <vars> <stats> end
 node* block(vector<vector<string>>& tokens) {
-	string nonterminalStr = "<block>";
-	node* tree = createTree(nonterminal(nonterminalStr));
+	node* tree = createTree(nonterminal("<block>"));
+	return tree;
+}
+
+// BNF: <expr> -> <N> - <expr> | <N>
+node* expr(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<expr>"));
+	return tree;
+}
+
+// BNF: <N> -> <A> + <N> | <A> * <N> | <A>
+node* N(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<N>"));
+	return tree;
+}
+
+// BNF: <A> -> <M> <A2>
+node* A(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<A>"));
+	return tree;
+}
+
+// BNF: <A2> -> / <M> <A2> | empty
+node* A2(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<A2>"));
+	return tree;
+}
+
+// BNF: <M> -> :<M> | <R>
+node* M(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<M>"));
+	return tree;
+}
+
+// BNF: <R> -> ( <expr> ) | Identifier | Integer
+node* R(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<R>"));
+	return tree;
+}
+
+// BNF: <stats> -> <stat> <mStat>
+node* stats(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<stats>"));
+	return tree;
+}
+
+// BNF: <mStat> -> empty | <stat> <mStat>
+node* mStat(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<mStat>"));
+	return tree;
+}
+
+// BNF: <stat> -> <in>; | <out>; | <block> | <if>; | <loop>; | <assign>; | <goto>; | <label>;
+node* stat(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<stat>"));
+	return tree;
+}
+
+// BNF: <in> -> input Identifier
+node* in(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<in>"));
+	return tree;
+}
+
+// BNF: <out> -> output <expr>
+node* out(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<out>"));
+	return tree;
+}
+
+// BNF: <if> -> if [ <expr> <RO> <expr> ] then <stat> | if [ <expr> <RO> <expr> ] then <stat> pick <stat>
+node* _if(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<if>"));
+	return tree;
+}
+
+// BNF: <loop> -> while [ <expr> <RO> <expr> ] <stat>
+node* loop(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<loop>"));
+	return tree;
+}
+
+// BNF: <assign> -> assign Identifier = <expr>
+node* assign(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<assign>"));
+	return tree;
+}
+
+// BNF: <RO> -> > | < | == | [=] | !=
+node* RO(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<RO>"));
+	return tree;
+}
+
+// BNF: <label> -> label Identifier
+node* label(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<label>"));
+	return tree;
+}
+
+// BNF: <goto> -> warp Identifier
+node* _goto(vector<vector<string>>& tokens) {
+	node* tree = createTree(nonterminal("<goto>"));
 	return tree;
 }
