@@ -13,6 +13,7 @@ using namespace std;
 int tokenID;
 vector<vector<string>> tokens;
 bool lookedAhead = false;
+string fileName;
 
 
 // Iterate over scanner depending on if we already looked ahead
@@ -58,7 +59,7 @@ void parserError(string message) {
 
 	// Get error line
 	ifstream file;
-	file.open("input.txt");
+	file.open(fileName);
 	if (file.fail()) {
 		cout << "File failed to open." << endl;
 		exit(0);
@@ -83,9 +84,10 @@ void parserError(string message) {
 }
 
 // BNF: <program> -> <vars> program <block>
-void parser(vector<vector<string>>& passedTokens) {
+void parser(vector<vector<string>>& passedTokens, string file) {
 	tokenID = 0;
 	tokens = passedTokens;
+	fileName = file;
 	
 	node* tree = createTree(nonterminal("<program>"));
 	addSubtree(tree, vars());

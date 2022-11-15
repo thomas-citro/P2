@@ -27,7 +27,7 @@ string keywords[17] = {"begin", "end", "do", "while", "whole", "label",
 			"if", "then", "pick", "declare", "assign", "func"};
 
 
-int main() {
+int main(int argc, char* argv[]) {
 	/* Declare/initialize variables */
 	vector<vector<string>> tokens;
 	fstream newfile;
@@ -35,24 +35,36 @@ int main() {
 	int state = 0;
 	int lineNumber = 1;
 	int lineLength = 0;
+	string fileName;
+	
+	/* Parse command-line arguments */
+	if (argc == 2) {
+		fileName = argv[1];
+	} else {
+		cout << "Usage:   ./P2 [file]" << endl;
+		exit(0);
+	}
 	
 	/* Process file line by line (Scanner) */
-	newfile.open("input.txt",ios::in);
+	newfile.open(fileName, ios::in);
 	if (newfile.is_open()) {
-	string currentLine;
+		string currentLine;
 		while(getline(newfile, currentLine)) {
 			lineLength = currentLine.length();
 			processLine(currentLine, tokens, processingComment, state, lineNumber);
 			lineNumber++;
 		}
 		newfile.close();
+	} else {
+		cout << "ERROR - Unable to open file" << endl;
+		exit(0);
 	}
 	vector<string> innerVector{"eof", "", to_string(lineNumber - 1), to_string(lineLength)};
 	tokens.push_back(innerVector);
-	outputVector(tokens);
+	//outputVector(tokens);
 	
 	/* Start the parser */
-	parser(tokens);
+	parser(tokens, fileName);
 }
 
 

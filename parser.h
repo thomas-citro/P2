@@ -27,7 +27,7 @@ void nextToken();
 token* nonterminal(std::string);
 token* terminal(std::vector<std::string>);
 token* bracketedEqualTerminal(std::vector<std::string>);
-void parser(std::vector<std::vector<std::string>>&);
+void parser(std::vector<std::vector<std::string>>&, std::string);
 node* vars();
 node* block();
 node* expr();
